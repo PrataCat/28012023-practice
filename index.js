@@ -1,5 +1,5 @@
 const content = document.querySelector(".content");
-let player = "X";
+
 const winCombinations = [
   [1, 2, 3],
   [4, 5, 6],
@@ -11,8 +11,13 @@ const winCombinations = [
   [3, 5, 7],
 ];
 
-let stepX = [];
-let stepY = [];
+const storageKeyX = "stepX";
+const storageKeyY = "stepY";
+const currentPlayer = "player";
+
+let stepX = JSON.parse(localStorage.getItem(storageKeyX)) || [];
+let stepY = JSON.parse(localStorage.getItem(storageKeyY)) || [];
+let player = localStorage.getItem(currentPlayer) || "X";
 
 let markup = "";
 for (let i = 1; i <= 9; i += 1) {
@@ -33,6 +38,7 @@ function onClick(e) {
     e.target.textContent = player;
     if (player === "X") {
       stepX.push(id);
+      localStorage.setItem(storageKeyX, JSON.stringify(stepX));
       if (isWinner(stepX)) {
         alert("X is winner");
         endGame();
@@ -40,6 +46,7 @@ function onClick(e) {
       }
     } else {
       stepY.push(id);
+      localStorage.setItem(storageKeyY, JSON.stringify(stepY));
       if (isWinner(stepY)) {
         alert("Y is winner");
         endGame();
@@ -50,6 +57,7 @@ function onClick(e) {
     console.log(stepY);
     console.log(e.target.dataset);
     player = player === "X" ? "O" : "X";
+    localStorage.setItem(currentPlayer, player);
   }
 }
 
@@ -65,4 +73,10 @@ function endGame() {
   player = X;
   stepX = [];
   stepY = [];
+  localStorage.clear();
 }
+
+function isReload() {}
+const arr = [...content.children];
+arr.forEach((i) => console.log(i));
+isReload();

@@ -25,3 +25,7 @@
 .item:hover {
   background-color: #f1f1f10c;
 }
+
+.reset {
+  padding: 15px;
+}

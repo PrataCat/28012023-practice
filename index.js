@@ -39,6 +39,7 @@ function onClick(e) {
     if (player === "X") {
       stepX.push(id);
       localStorage.setItem(storageKeyX, JSON.stringify(stepX));
+
       if (isWinner(stepX)) {
         alert("X is winner");
         endGame();
@@ -68,15 +69,26 @@ function isWinner(arr) {
   return result;
 }
 
+resetbtn.addEventListener("click", endGame);
+
 function endGame() {
   content.innerHTML = markup;
-  player = X;
+  player = "X";
   stepX = [];
   stepY = [];
   localStorage.clear();
 }
 
-function isReload() {}
-const arr = [...content.children];
-arr.forEach((i) => console.log(i));
+function isReload() {
+  const arr = [...content.children];
+  arr.forEach((i) => {
+    const ID = +i.dataset.id;
+    if (stepX.includes(ID)) {
+      i.textContent = "X";
+    } else if (stepY.includes(ID)) {
+      i.textContent = "O";
+    }
+  });
+}
+
 isReload();
